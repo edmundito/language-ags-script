@@ -5,11 +5,11 @@ Adds syntax highlighting to script files [Adventure Game Studio (AGS)](http://ad
 ## Requirements
 
 - Atom 1.32+
-- Node 8+
+- Node 8.x (**Atom does not work with 10**)
 
 ## WORK IN PROGRESS Install Instructions
 
-This project is still in development and depends on [tree-sitter-ags-script](https://github.com/edmundito/tree-sitter-ags-script) which 
+**This project is still in development** and depends on [tree-sitter-ags-script](https://github.com/edmundito/tree-sitter-ags-script) which 
 has not been published to npm yet.
 
 In order to use this module in Atom, you have to
@@ -23,9 +23,9 @@ cd tree-sitter-ags-script
 npm install
 npm link
 
-cd ../
-cd language-ags-script
+cd ../language-ags-script
 npm link tree-sitter-ags-script
+
 apm link .
 ```
 
