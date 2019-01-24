@@ -1,0 +1,15 @@
+{
+  "name": "language-ags-script",
+  "version": "1.0.0",
+  "description": "Adventure Game Studio (AGS) scripting language support in Atom",
+  "engines": {
+    "atom": ">1.32.0",
+    "node": ">8"
+  },
+  "license": "MIT",
+  "keywords": [
+    "tree-sitter",
+    "ags",
+    "ags-script"
+  ]
+}

@@ -1,0 +1,230 @@
+name: 'AGS Script'
+scopeName: 'ags-script'
+type: 'tree-sitter'
+parser: 'tree-sitter-ags-script'
+
+fileTypes: [
+  'ash',
+  'asc'
+]
+
+contentRegex: '^(\/\/.+|((import|export)\s+)?(function|int|float|char)\s+((room|repeatedly|on|game)_)?([A-Za-z]+[A-Za-z_0-9]+)\s*[;\(])'
+
+folds: [
+  {
+    type: ['comment']
+  }
+  {
+    type: [
+      'preproc_region',
+      'preproc_ifdef',
+      'preproc_ifndef',
+      'preproc_ifver',
+      'preproc_ifnver'
+    ],
+    end: {index: -1}
+  }
+  {
+    type: [
+      'enumerator_list'
+      'compound_statement'
+      'declaration_list'
+      'field_declaration_list'
+      'parameter_list'
+      'argument_list'
+      'initializer_list'
+      'parenthesized_expression'
+      'template_parameter_list'
+      'template_argument_list'
+    ]
+    start: {index: 0}
+    end: {index: -1}
+  }
+  {
+    type: 'case_statement'
+    start: {index: 0}
+    end: {type: 'break_statement', index: -1}
+  }
+  {
+    type: 'case_statement'
+    start: {index: 0}
+  }
+]
+
+comments:
+  start: '// '
+
+scopes:
+  'script': 'source.cs'
+  
+  'comment': [
+    {
+      match: '\$AUTOCOMPLETE(IGNORE|STATICONLY|NOINHERIT)\$',
+      scopes: 'markup.bold'
+    },
+    'comment.block'
+  ]
+  
+  'identifier': [
+    {
+      match: '^(character|hotspot|gui|inventory|mouse|object|palette|player|region)$',
+      scopes: 'support.constant.variable'
+    },
+    # {
+    #   match: '^[A-Z][A-Za-z0-9_]+$',
+    #   scopes: 'entity.name.class'
+    # },
+    {
+      match: '^(AudioChannel|AudioClip|Character|DateTime|Dialog|DialogOptionsRenderingInfo|DrawingSurface|DynamicSprite|File|Game|GUI|GUIControl|Button|InvWindow|Label|ListBox|Slider|TextBox|Hotspot|InventoryItem|eKeyCode|Maths|MouseControl|Object|Overlay|Palette|Parser|Region|Room|Screen|Speech|String|System|ViewFrame)$',
+      scopes: 'support.class'
+    },
+    {
+      match: '^(DEBUG|SCRIPT_(API|COMPAT)_v[0-9]+|STRICT(_(STRINGS|AUDIO))?|LRPRECEDENCE|AGS_(NEW_STRINGS|SUPPORTS_IFVER|MAX_(INV_ITEMS|OBJECTS|HOTSPOTS|REGIONS))|NEW_DIALOGOPTS_API)$',
+      scopes: 'support.constant'
+    },
+    {
+      match: '^(this)$',
+      scopes: 'keyword.operator',
+    }
+    {
+      match: '^((_*(btn|c|e|g|h|i|lbl|lst|sld|txt)[A-Z][A-Za-z0-9_]+)|([A-Za-z0-9_]+[Bb]utt))$',
+      scopes: 'support.constant.variable'
+    },
+    { match: '^([A-Za-z_]*_)?[A-Z\\d_]{2,}$', scopes: 'constant.other' }
+  ]
+  
+  '"#if"': 'keyword.control.directive'
+  '"#ifdef"': 'keyword.control.directive'
+  '"#ifndef"': 'keyword.control.directive'
+  '"#ifver"': 'keyword.control.directive'
+  '"#ifnver"': 'keyword.control.directive'
+  '"#endif"': 'keyword.control.directive'
+  '"#region"': 'keyword.control.directive'
+  '"#endregion"': 'keyword.control.directive'
+  '"#define"': 'keyword.control.directive'
+  '"#error"': 'keyword.control.directive'
+  'preproc_directive': 'keyword.control.directive'
+
+  '"if"': 'keyword.control'
+  '"else"': 'keyword.control'
+  '"do"': 'keyword.control'
+  '"for"': 'keyword.control'
+  '"while"': 'keyword.control'
+  '"break"': 'keyword.control'
+  '"continue"': 'keyword.control'
+  '"return"': 'keyword.control'
+  '"switch"': 'keyword.control'
+  '"case"': 'keyword.control'
+  '"default"': 'keyword.control'
+
+  '"struct"': 'keyword.control'
+  '"enum"': 'keyword.control'
+
+  'preproc_arg': 'meta.preprocessor.macro'
+
+  '''
+  call_expression > identifier,
+  call_expression > field_expression > field_identifier,
+  call_expression > scoped_identifier > identifier,
+  function_declarator > identifier,
+  function_import_declarator > identifier,
+  function_field_declarator > field_identifier,
+  function_declarator > scoped_identifier > identifier
+  ''': [
+    {
+      match: '^(dialog_request|game_start|interface_click|on_(event|key_press|mouse_click)|repeatedly_execute|(late_)?repeatedly_execute_always|unhandled_event)$',
+      scopes: 'support.function'
+    },
+    'entity.name.function'
+  ]
+
+  'statement_identifier': 'constant.variable'
+
+  'field_identifier': 'variable.other.member'
+
+  'type_identifier':  [
+    {
+      match: '^_*[A-Z][A-Za-z0-9_]+$',
+      scopes: 'entity.name.class'
+    },
+    {
+      match: '^(AudioChannel|AudioClip|Character|DateTime|Dialog|DialogOptionsRenderingInfo|DrawingSurface|DynamicSprite|File|Game|GUI|GUIControl|Button|InvWindow|Label|ListBox|Slider|TextBox|Hotspot|InventoryItem|eKeyCode|Maths|MouseControl|Object|Overlay|Palette|Parser|Region|Room|Screen|Speech|String|System|ViewFrame)$',
+      scopes: 'support.class'
+    },
+    'support.storage.type'
+  ]
+  'primitive_type': 'support.storage.type'
+  'function_type': 'support.storage.type'
+
+  'char_literal': 'string.quoted.single'
+  'string_literal': 'string.quoted.double'
+  'escape_sequence': 'constant.character.escape'
+
+  'number_literal': 'constant.numeric.decimal'
+  'version_literal': 'constant.numeric.decimal'
+  'null': 'constant.language.null'
+  'true': 'constant.language.boolean'
+  'false': 'constant.language.boolean'
+
+  '"attribute"': 'storage.modifier'
+  '"builtin"': 'storage.modifier'
+  '"export"': 'storage.modifier'
+  '"import"': 'storage.modifier'
+  '"static"': 'storage.modifier'
+  'parameter_type_qualifier': 'storage.modifier'
+  '"protected"': 'storage.modifier'
+  '"writeprotected"': 'storage.modifier'
+  'struct_type_qualifier': 'storage.modifier'
+  '"extends"': 'storage.modifier'
+  'type_qualifier': 'storage.modifier'
+  'function_specifier': 'storage.modifier'
+  'function_qualifier': 'storage.modifier'
+
+  '";"': 'punctuation.terminator.statement'
+  '"["': 'punctuation.definition.begin.bracket.square'
+  '"]"': 'punctuation.definition.end.bracket.square'
+  '","': 'punctuation.separator.delimiter'
+  'char_literal > "\'"': 'punctuation.definition.string'
+  # 'string_literal > "\"': 'punctuation.definition.string' # TODO: Figure out why this doesn't work
+  '"{"': 'punctuation.section.block.begin.bracket.curly'
+  '"}"': 'punctuation.section.block.end.bracket.curly'
+  '"("': 'punctuation.section.parens.begin.bracket.round'
+  '")"': 'punctuation.section.parens.end.bracket.round'
+  '"::"': 'punctuation.separator.method.double-colon'
+
+  '"this"': 'keyword.operator',
+  '"new"': 'keyword.operator'
+  '"."': 'keyword.operator.member'
+  '"*"': 'keyword.operator'
+  '"-"': 'keyword.operator'
+  '"+"': 'keyword.operator'
+  '"/"': 'keyword.operator'
+  '"%"': 'keyword.operator'
+  '"++"': 'keyword.operator'
+  '"--"': 'keyword.operator'
+  '"=="': 'keyword.operator'
+  '"!"': 'keyword.operator'
+  '"!="': 'keyword.operator'
+  '"<"': 'keyword.operator'
+  '">"': 'keyword.operator'
+  '">="': 'keyword.operator'
+  '"<="': 'keyword.operator'
+  '"&&"': 'keyword.operator'
+  '"||"': 'keyword.operator'
+  '"&"': 'keyword.operator'
+  '"|"': 'keyword.operator'
+  '"^"': 'keyword.operator'
+  '"~"': 'keyword.operator'
+  '"<<"': 'keyword.operator'
+  '">>"': 'keyword.operator'
+  '"="': 'keyword.operator'
+  '"+="': 'keyword.operator'
+  '"-="': 'keyword.operator'
+  '"*="': 'keyword.operator'
+  '"/="': 'keyword.operator'
+  '"%="': 'keyword.operator'
+  '"<<="': 'keyword.operator'
+  '">>="': 'keyword.operator'
+  '"&="': 'keyword.operator'
+  '"^="': 'keyword.operator'
+  '"|="': 'keyword.operator'
