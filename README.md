@@ -7,7 +7,7 @@ Adds syntax highlighting to script files [Adventure Game Studio (AGS)](http://ad
 - Atom 1.32+
 - Node 8+
 
-### WORK IN PROGRESS Install Instructions
+## WORK IN PROGRESS Install Instructions
 
 This project is still in development and depends on [tree-sitter-ags-script](https://github.com/edmundito/tree-sitter-ags-script) which 
 has not been published to npm yet.
