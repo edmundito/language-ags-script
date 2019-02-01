@@ -20,6 +20,7 @@ git clone git@github.com:edmundito/tree-sitter-ags-script.git
 git clone git@github.com:edmundito/language-ags-script.git
 
 cd tree-sitter-ags-script
+npm install -g tree-sitter-cli
 npm install
 npm link
 
