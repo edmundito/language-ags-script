@@ -1,4 +1,4 @@
-# Adventure Game Studio (AGS) scripting language support in Atom
+# Adventure Game Studio (AGS) script language support in Atom
 
 Adds syntax highlighting to script files [Adventure Game Studio (AGS)](http://adventuregamestudio.co.uk) script files in Atom.
 
