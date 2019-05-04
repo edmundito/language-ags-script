@@ -1,6 +1,6 @@
 {
   "name": "language-ags-script",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Adventure Game Studio (AGS) scripting language support in Atom",
   "engines": {
     "atom": ">1.32.0",
@@ -11,5 +11,12 @@
     "tree-sitter",
     "ags",
     "ags-script"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edmundito/language-ags-script.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edmundito/language-ags-script/issues"
+  }
 }
