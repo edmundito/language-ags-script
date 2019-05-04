@@ -18,5 +18,8 @@
   },
   "bugs": {
     "url": "https://github.com/edmundito/language-ags-script/issues"
+  },
+  "dependencies": {
+    "tree-sitter-ags-script": "^0.1.2"
   }
 }
