@@ -1,6 +1,6 @@
 {
   "name": "language-ags-script",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Adventure Game Studio (AGS) scripting language support in Atom",
   "engines": {
     "atom": ">1.32.0",
