@@ -1,7 +1,7 @@
 ## Requirements
 
 - Atom 1.32+
-- Node 12.x (**Current version supported by Atom**)
+- Node 10.x (**Current version supported by Atom**)
 
 ## WORK IN PROGRESS Install Instructions
 

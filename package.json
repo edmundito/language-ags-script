@@ -4,7 +4,7 @@
   "description": "Adventure Game Studio (AGS) scripting language support in Atom",
   "engines": {
     "atom": ">1.32.0",
-    "node": ">12"
+    "node": ">10"
   },
   "license": "MIT",
   "keywords": [
