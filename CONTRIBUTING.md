@@ -1,7 +1,7 @@
 ## Requirements
 
 - Atom 1.32+
-- Node 8.x (**Atom does not work with 10**)
+- Node 12.x (**Current version supported by Atom**)
 
 ## WORK IN PROGRESS Install Instructions
 
@@ -29,3 +29,7 @@ Then you can open Atom.
 
 If you would like to modify the code you can open this project in Atom and
 then press `Control(Command on Mac)+P` and type `Window: Reload`.
+
+## Publishing
+
+See: https://flight-manual.atom.io/hacking-atom/sections/publishing/
